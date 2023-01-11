@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  background: #000000;
+}
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 4rem;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 58px;
+  color: #ffffff;
+  margin-bottom: 48px;
+}
+
+.form-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-form {
+  min-width: 300px;
+  padding: 13px 18px 13px 48px;
+  outline: none;
+  border: 1px solid #ccc;
+  background: #000000;
+  border: 2px solid #ffffff;
+  border-radius: 15px;
+  color: white;
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: auto;
+  height: 26px;
+  margin: auto;
+  border-right: 1px solid white;
+  padding-right: 6px;
+  object-fit: contain;
+}
+
+.input-form:focus {
+  /* border: 1px solid #555; */
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.button {
+  color: #ffffff;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  display: inline-block;
+  padding: 5px 20px;
+  font-size: 1.2rem;
+  background-color: transparent;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  background: #1a7fc1;
+  border-radius: 15px;
+  font-weight: 400;
+  line-height: 38px;
+}
+
+.button:hover {
+  background-color: #136094;
+}
+
+.pernik {
+  position: absolute;
+}
+
+.pernik1 {
+  top: -15px;
+  left: -15px;
+}
+
+.pernik2 {
+  top: -15px;
+  right: -15px;
+}
+
+.pernik3 {
+  bottom: -15px;
+  left: -15px;
+}
+
+.pernik4 {
+  bottom: -15px;
+  right: -15px;
+}
