@@ -65,3 +65,75 @@ body {
   color: #000000;
   border: 1px solid #555;
 }
+
+.d-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 1280px;
+  margin: 20px auto;
+}
+
+.img {
+  width: 250px;
+  height: auto;
+  object-fit: contain;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.title {
+  font-size: 50px;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.sub-title {
+  font-size: 24px;
+  margin: 0;
+  margin: 10px 0;
+}
+
+.menu-wrapper {
+  list-style-type: none;
+  display: flex;
+  /* gap: 20px; */
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.menu-item {
+  border-right: 1px solid black;
+  padding: 0 10px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+}
+
+.menu-item:first-child {
+  padding-left: 0;
+}
+
+.menu-item:last-child {
+  border-right: none;
+}
+
+.jumbotron {
+  border: 2px solid black;
+  padding: 10px 20px;
+  min-width: 500px;
+  min-height: 200px;
+  margin: 15px 0;
+}
+
+.btn {
+  align-self: flex-end;
+}
