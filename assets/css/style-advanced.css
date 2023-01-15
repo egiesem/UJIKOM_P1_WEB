@@ -107,9 +107,22 @@ body {
   left: -15px;
 }
 
+@keyframes spin {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .pernik2 {
   top: -15px;
   right: -15px;
+  animation: spin 4s ease-in-out infinite;
 }
 
 .pernik3 {
