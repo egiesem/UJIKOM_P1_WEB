@@ -48,8 +48,8 @@
             <button class="button">Urutkan</button>
           </div>
           <div class="table-body">
-            <table>
-              <tr>
+            <table id="dataFromApi">
+              <!-- <tr>
                 <th>Tanggal</th>
                 <th>Waktu</th>
                 <th>Lokasi</th>
@@ -72,7 +72,7 @@
                 <td>$100</td>
                 <td>January</td>
                 <td>$100</td>
-              </tr>
+              </tr> -->
             </table>
             <button class="button btn-table">Isi Catatan Perjalanan</button>
           </div>
@@ -104,7 +104,7 @@
     </div>
 
     <script>
-      function showTab(params) {
+      async function showTab(params) {
         //document.getElementById("demo");
         //document.querySelector(".example");
         // if (el.classList.contains("hidden")) {
@@ -150,6 +150,42 @@
               element.classList.add("hidden");
             }
           });
+          const getData = await callApi(
+            "https://jsonplaceholder.typicode.com/users"
+          );
+          console.log("typeof getData", getData);
+          const dataTable = document.getElementById("dataFromApi");
+
+          let datas = `<tr>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+                <th>Lokasi</th>
+                <th>Suhu Tubuh</th>
+              </tr>`;
+
+          getData.forEach((data) => {
+            datas += `<tr>
+                <td>${data.id}</td>
+                <td>${data.username}</td>
+                <td>${data.email}</td>
+                <td>${data.website}</td>
+              </tr>`;
+          });
+
+          dataTable.innerHTML = datas;
+
+          // getData.map((user, index) => {
+          //   console.log("tes", user);
+          // });
+          // dataTable.innerHTML = for (let index = 0; index < array.length; index++) {
+          //    `<tr>
+          //       <td>January</td>
+          //       <td>$100</td>
+          //       <td>January</td>
+          //       <td>$100</td>
+          //     </tr>`;
+
+          // }
         } else {
           el.forEach((element, index) => {
             console.log("element", index);
@@ -163,6 +199,15 @@
           });
         }
       }
+
+      async function callApi(url) {
+        const response = await fetch(url);
+        let data = await response.json();
+        // console.log("data", data.length);
+        return data;
+      }
+
+      callApi("https://jsonplaceholder.typicode.com/users");
     </script>
   </body>
 </html>
