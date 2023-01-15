@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
   </head>
   <body>
     <div class="d-wrapper">
@@ -16,15 +24,145 @@
         <h1 class="title">PEDULI DIRI</h1>
         <h3 class="sub-title">Catatan Perjalanan</h3>
         <ul class="menu-wrapper">
-          <li class="menu-item">Home</li>
-          <li class="menu-item">Catatan Perjalanan</li>
-          <li class="menu-item">Isi Data</li>
+          <li class="menu-item" onclick="showTab('home')">Home</li>
+          <li class="menu-item" onclick="showTab('catatan')">
+            Catatan Perjalanan
+          </li>
+          <li class="menu-item" onclick="showTab('isiData')">Isi Data</li>
         </ul>
-        <div class="jumbotron">
-          <p>Selamat Datang Nama User di aplikasi Peduli Diri</p>
+        <div class="jumbotron-wrapper item-id">
+          <div class="jumbotron">
+            <p>Selamat Datang Nama User di aplikasi Peduli Diri</p>
+          </div>
+          <button class="btn">Isi Catatan Perjalanan</button>
         </div>
-        <button class="btn">Isi Catatan Perjalanan</button>
+        <div class="table-wrapper hidden item-id">
+          <div class="table-header">
+            <span class="table-header-text">Urutkan Berdasarkan </span>
+            <select class="table-header-select" name="" id="">
+              <option value="">Tanggal</option>
+              <option value="">Waktu</option>
+              <option value="">Lokasi</option>
+              <option value="">Suhu Tubuh</option>
+            </select>
+            <button class="button">Urutkan</button>
+          </div>
+          <div class="table-body">
+            <table>
+              <tr>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+                <th>Lokasi</th>
+                <th>Suhu Tubuh</th>
+              </tr>
+              <tr>
+                <td>January</td>
+                <td>$100</td>
+                <td>January</td>
+                <td>$100</td>
+              </tr>
+              <tr>
+                <td>January</td>
+                <td>$100</td>
+                <td>January</td>
+                <td>$100</td>
+              </tr>
+              <tr>
+                <td>January</td>
+                <td>$100</td>
+                <td>January</td>
+                <td>$100</td>
+              </tr>
+            </table>
+            <button class="button btn-table">Isi Catatan Perjalanan</button>
+          </div>
+        </div>
+        <div class="jumbotron-wrapper hidden item-id">
+          <div class="jumbotron center-content">
+            <div class="dashboard-form-wrapper">
+              <span>Tanggal</span>
+              <input type="date" name="" id="" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper">
+              <span>Jam</span>
+              <input type="time" name="" id="" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper">
+              <span>Lokasi yang dikunjungi</span>
+              <input type="text" name="" id="" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper">
+              <span>Suhu Tubuh</span>
+              <input type="text" name="" id="" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper button-d-form">
+              <button class="button btn-table">Simpan</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <script>
+      function showTab(params) {
+        //document.getElementById("demo");
+        //document.querySelector(".example");
+        // if (el.classList.contains("hidden")) {
+        //   el.classList.remove("hidden");
+        // } else {
+        //   // el.classList.add("hidden");
+        // }
+        function menuLooping(el, x) {
+          el.forEach((element, index) => {
+            console.log("element", index);
+            if (index === x) {
+              if (element.classList.contains("hidden")) {
+                return element.classList.remove("hidden");
+              }
+            } else {
+              return element.classList.add("hidden");
+            }
+          });
+        }
+
+        const el = document.querySelectorAll(".item-id");
+        console.log("el", params);
+        if (params === "home") {
+          menuLooping(el, 0);
+          // el.forEach((element, index) => {
+          //   console.log("element", index);
+          //   if (index === 0) {
+          //     if (element.classList.contains("hidden")) {
+          //       element.classList.remove("hidden");
+          //     }
+          //   } else {
+          //     element.classList.add("hidden");
+          //   }
+          // });
+        } else if (params === "catatan") {
+          el.forEach((element, index) => {
+            console.log("element", index);
+            if (index === 1) {
+              if (element.classList.contains("hidden")) {
+                element.classList.remove("hidden");
+              }
+            } else {
+              element.classList.add("hidden");
+            }
+          });
+        } else {
+          el.forEach((element, index) => {
+            console.log("element", index);
+            if (index === 2) {
+              if (element.classList.contains("hidden")) {
+                element.classList.remove("hidden");
+              }
+            } else {
+              element.classList.add("hidden");
+            }
+          });
+        }
+      }
+    </script>
   </body>
 </html>
