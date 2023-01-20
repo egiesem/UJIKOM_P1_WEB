@@ -1,26 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ujikom</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
     <div class="wrapper">
-        <!-- <h1 class="title">Selamat Datang</h1> -->
-        <form action="" method="post" class="form-wrapper">
-            <input type="text" placeholder="NIK" class="input-form" name="username" id="username">
-            <input type="text" placeholder="Nama Lengkap" class="input-form" name="password" id="password">
-            <div class="button-group">
-                <a href="" class="button">Saya pengguna baru</a>
-                <button type="submit" class="button">Masuk</button>
-            </div>
-
-        </form>
+      <!-- <h1 class="title">Selamat Datang</h1> -->
+      <form action="" method="post" class="form-wrapper">
+        <input
+          type="text"
+          placeholder="NIK"
+          class="input-form"
+          name="username"
+          id="nik"
+          autofocus
+        />
+        <input
+          type="text"
+          placeholder="Nama Lengkap"
+          class="input-form"
+          name="password"
+          id="nama_lengkap"
+        />
+        <div class="button-group">
+          <a onclick="handleSubmit(event,'daftar')" class="button"
+            >Saya pengguna baru</a
+          >
+          <button onclick="handleSubmit(event,'masuk')" class="button">
+            Masuk
+          </button>
+        </div>
+      </form>
     </div>
-    
-</body>
+    <script>
+      //function check isloggedin
+      function isLoggedin() {
+        if (localStorage.getItem("isLoggedin") !== null) {
+          window.location.replace("/dashboard.html");
+        }
+      }
+      isLoggedin();
+      function handleSubmit(e, x) {
+        // console.log("x", x);
+        e.preventDefault();
+        ///get value from the form
+        const nik = document.getElementById("nik").value;
+        const nama_lengkap = document.getElementById("nama_lengkap").value;
+
+        // console.log("nik", nama_lengkap);
+        if (!nik || !nama_lengkap) {
+          return alert("Isi Form!");
+        }
+
+        if (x === "daftar") {
+        } else {
+          //masuk
+          if (nik === "admin" && nama_lengkap === "123") {
+            localStorage.setItem("isLoggedin", "admin");
+            window.location.replace("/dashboard.html");
+          } else {
+            alert("Username atau Password salah!");
+          }
+        }
+      }
+    </script>
+  </body>
 </html>
