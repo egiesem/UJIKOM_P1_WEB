@@ -44,8 +44,9 @@
         }
       }
       isLoggedin();
-      function handleSubmit(e, x) {
+      async function handleSubmit(e, x) {
         // console.log("x", x);
+        console.log("e", e);
         e.preventDefault();
         ///get value from the form
         const nik = document.getElementById("nik").value;
@@ -53,17 +54,72 @@
 
         // console.log("nik", nama_lengkap);
         if (!nik || !nama_lengkap) {
-          return alert("Isi Form!");
+          // return alert("Isi Form!");
         }
 
+        const formData = new FormData();
+        formData.append("nik", nik);
+        formData.append("nama_lengkap", nama_lengkap);
         if (x === "daftar") {
+          formData.append("action", "daftar");
+        } else {
+          formData.append("action", "login");
+        }
+
+        // formData.forEach((value, key) => {
+        //   console.log("key %s: value %s", key, value);
+        // });
+        let object = {};
+        formData.forEach((value, key) => (object[key] = value));
+        let json = JSON.stringify(object);
+
+        if (x === "daftar") {
+          console.log("daftar");
+
+          try {
+            const response = await fetch("http://localhost", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: json,
+            });
+            let data = await response.json();
+            // console.log("data", data.length);
+            console.log("data", data);
+
+            if (data === "sudah terdaftar") {
+              alert("NIK sudah terdaftar");
+            } else {
+              alert("Pendaftaran berhasil, anda akan diarahkan ke dashboard!");
+              localStorage.setItem("isLoggedin", "admin");
+              window.location.replace("/dashboard.html");
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
         } else {
           //masuk
-          if (nik === "admin" && nama_lengkap === "123") {
-            localStorage.setItem("isLoggedin", "admin");
-            window.location.replace("/dashboard.html");
-          } else {
-            alert("Username atau Password salah!");
+          // if (nik === "admin" && nama_lengkap === "123") {
+          //   localStorage.setItem("isLoggedin", "admin");
+          //   window.location.replace("/dashboard.html");
+          // } else {
+          //   alert("Username atau Password salah!");
+          // }
+
+          try {
+            const response = await fetch("http://localhost", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: json,
+            });
+            let data = await response.json();
+            // console.log("data", data.length);
+            console.log("data", data);
+          } catch (error) {
+            console.log("error", error);
           }
         }
       }
