@@ -9,6 +9,10 @@
 require_once "header.php";
 require_once "method.php";
 
+// echo $_SERVER['REQUEST_METHOD'];
+// echo "hallo";
+
+
 // $peduliDiri = new PeduliDiri();
 // $peduliDiri->getData();
 
@@ -16,9 +20,11 @@ $datas = json_decode(file_get_contents('php://input'), true);
 if (isset($datas['nik']) && isset($datas['nama_lengkap']) && isset($datas['action'])) {
     $peduliDiri = new PeduliDiri();
     if ($datas['action'] == 'daftar') {
-        $peduliDiri->daftar($peduliDiri->clean($datas['nik']), $peduliDiri->clean($datas['nama_lengkap']));
+        // $peduliDiri->daftar($peduliDiri->clean($datas['nik']), $peduliDiri->clean($datas['nama_lengkap']));
+        $peduliDiri->daftar($peduliDiri->clean($datas['nik']), $datas['nama_lengkap']);
     } elseif ($datas['action'] == 'login') {
-        $peduliDiri->login($peduliDiri->clean($datas['nik']), $peduliDiri->clean($datas['nama_lengkap']));
+        // $peduliDiri->login($peduliDiri->clean($datas['nik']), $peduliDiri->clean($datas['nama_lengkap']));
+        $peduliDiri->login($peduliDiri->clean($datas['nik']), $datas['nama_lengkap']);
     }
 }
 

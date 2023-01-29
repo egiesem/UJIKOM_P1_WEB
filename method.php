@@ -65,18 +65,22 @@ class PeduliDiri
     public function login($nik, $nama_lengkap)
     {
         $credential = $nik . "|" . $nama_lengkap;
-
+        header('Content-Type: application/json');
         //check if nik sudah terdaftar
         $file = file($this->filename, FILE_IGNORE_NEW_LINES);
-        if (in_array($credential, $file)) {
-            echo "ada";
-        } else {
-            echo "tidak ada";
-        }
+        // if (in_array($credential, $file)) {
+        //     echo "ada";
+        // } else {
+        //     echo "tidak ada";
+        // }
 
 
         if (stripos(json_encode($file), $credential) !== false) {
-            echo "found mystring";
+            // echo "found mystring";
+            $data = ['status' => 'success', 'nik' => $nik, 'nama_lengkap' => $nama_lengkap];
+            echo json_encode($data);
+        } else {
+            echo json_encode('error');
         }
 
 

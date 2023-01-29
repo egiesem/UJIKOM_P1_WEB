@@ -1,4 +1,7 @@
-qwe|qwe
+qwe|Egi Samsul Mu'arif
 scriptalerttesscript|scriptalerttesscript
 1|1|fkjsdhfsk
 12|1
+2|1
+egi|Egi-Samsul-Muarif
+egiesem|egi samsul mu'arif
