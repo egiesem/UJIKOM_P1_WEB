@@ -32,7 +32,10 @@
         </ul>
         <div class="jumbotron-wrapper item-id">
           <div class="jumbotron">
-            <p>Selamat Datang Nama User di aplikasi Peduli Diri</p>
+            <p>
+              Selamat Datang <span id="isLoggedinName"></span> di aplikasi
+              Peduli Diri
+            </p>
           </div>
           <button class="btn">Isi Catatan Perjalanan</button>
         </div>
@@ -211,6 +214,16 @@
 
       //next: https://stackoverflow.com/questions/66209717/update-multiple-variables-with-onchange-event-in-vanilla-javascript
       // next: php
+
+      function getisLoggedinName() {
+        const name = localStorage.getItem("isLoggedinName");
+
+        if (name) {
+          document.getElementById("isLoggedinName").innerHTML = name;
+        }
+      }
+
+      getisLoggedinName();
     </script>
   </body>
 </html>

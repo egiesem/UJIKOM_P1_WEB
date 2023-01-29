@@ -118,6 +118,13 @@
             let data = await response.json();
             // console.log("data", data.length);
             console.log("data", data);
+            if (data.status === "success") {
+              localStorage.setItem("isLoggedin", data.nik);
+              localStorage.setItem("isLoggedinName", data.nama_lengkap);
+              window.location.replace("/dashboard.html");
+            } else {
+              alert("Username atau password salah!");
+            }
           } catch (error) {
             console.log("error", error);
           }
