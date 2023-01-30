@@ -2,3 +2,43 @@
 {"nik":"1","nama_lengkap":"1","action":"daftar"}
 
 {"nik":"1","nama_lengkap":"12","action":"login"}
+
+
+form {
+        box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 35%);
+    -webkit-box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 35%);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.35);
+    padding: 50px;
+}
+
+input {
+    line-height: 1.2;
+    font-size: 18px;
+    display: block;
+    width: 100%;
+    /* background: 0 0; */
+    height: 62px;
+    /* padding: 50px; */
+}
+
+.button {
+        color: rgb(116, 116, 116);
+    text-decoration: none;
+    outline: none;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 5px 35px;
+    font-size: 1rem;
+    background-color: transparent;
+    cursor: pointer;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 62px;
+    background-color: #827ffe;
+    border-radius: 3px;
+    color: white;
+}
