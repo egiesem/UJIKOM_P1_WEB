@@ -17,7 +17,17 @@ require_once "method.php";
 // $peduliDiri->getData();
 
 $datas = json_decode(file_get_contents('php://input'), true);
-if (isset($datas['nik']) && isset($datas['nama_lengkap']) && isset($datas['action'])) {
+// if (isset($datas['nik']) && isset($datas['nama_lengkap']) && isset($datas['action'])) {
+if (isset($datas['action'])) {
+    // $nik = $datas['nik'];
+    // $nama_lengkap = $datas['nama_lengkap'];
+    $action = $datas['action']; //sipakan
+
+    // if ($action == 'daftar') {
+    //     $peduliDiri->daftar($nik, $nama_lengkap);
+    // } elseif ($action == 'login') {
+    //     $peduliDiri->login($nik, $nama_lengkap);
+    // } //dan lain lain
     $peduliDiri = new PeduliDiri();
     if ($datas['action'] == 'daftar') {
         // $peduliDiri->daftar($peduliDiri->clean($datas['nik']), $peduliDiri->clean($datas['nama_lengkap']));
@@ -25,14 +35,20 @@ if (isset($datas['nik']) && isset($datas['nama_lengkap']) && isset($datas['actio
     } elseif ($datas['action'] == 'login') {
         // $peduliDiri->login($peduliDiri->clean($datas['nik']), $peduliDiri->clean($datas['nama_lengkap']));
         $peduliDiri->login($peduliDiri->clean($datas['nik']), $datas['nama_lengkap']);
+    } elseif ($datas['action'] == 'getCatatan') {
+        $peduliDiri->getData($datas['nik']);
+    } elseif ($datas['action'] == 'isiCatatan') {
+        $peduliDiri->isiCatatan($datas['nik'], $datas['tanggal'], $datas['jam'], $datas['lokasi'], $datas['suhu']);
     }
 }
 
 
 
+
+
 // echo $_POST['nik'];
 
-$data = json_decode(file_get_contents('php://input'), true);
+// $data = json_decode(file_get_contents('php://input'), true);
 
 // print_r($data['nik']);
 
