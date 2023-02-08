@@ -157,7 +157,7 @@ class PeduliDiri
     public function isiCatatan($nik, $tanggal, $jam, $lokasi, $suhu)
     {
         //check if ifle exis
-        echo $checkFile = file_exists('./output/data-' . $nik . '.txt');
+        $checkFile = file_exists('./output/data-' . $nik . '.txt');
 
 
         //function insert data 
@@ -176,12 +176,12 @@ class PeduliDiri
         }
 
         if ($checkFile) {
-            echo "file ada";
+            // echo "file ada";
             //langsung insert
             $fileName = "./output/data-" . $nik . ".txt";
             saveData($fileName, $tanggal, $jam, $lokasi, $suhu);
         } else {
-            echo "gak ada";
+            // echo "gak ada";
             $createFile = fopen("./output/data-" . $nik . ".txt", "w"); //create file
             $fileName = "./output/data-" . $nik . ".txt";
             saveData($fileName, $tanggal, $jam, $lokasi, $suhu);
@@ -195,7 +195,37 @@ class PeduliDiri
 
     public function sorting($nik, $sort)
     {
-        $datasBeforSorting = $this->getData($nik);
+        $file_handle = fopen('./output/data-' . $nik . '.txt', 'r');
+        $datas = array();
+        while (!feof($file_handle)) {
+            // echo fgets($file_handle) . "<br/>";
+            $separate = explode("|", fgets($file_handle));
+            // echo $separate[0];
+            // if (condition) {
+            //     # code...
+            // }
+            if ($separate[0] != '') {
+                $clearDataEnd = str_replace("\r", "", $separate[3]);
+                $clearDataFinal = str_replace("\n", "", $clearDataEnd);
+                $datas[] = [
+                    'tanggal' => $separate[0],
+                    'waktu' => $separate[1],
+                    'lokasi' => $separate[2],
+                    'suhu' => $clearDataFinal
+                ];
+            }
+            // $datas[] = fgets($file_handle);
+        }
+        fclose($file_handle);
+
+        // print_r($datas);
+        usort($datas, function ($a, $b) use ($sort) {
+            return $a[$sort] <=> $b[$sort];
+        });
+
+
+        echo json_encode($datas);
+        return;
 
 
     }

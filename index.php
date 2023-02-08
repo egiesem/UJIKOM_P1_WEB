@@ -39,6 +39,8 @@ if (isset($datas['action'])) {
         $peduliDiri->getData($datas['nik']);
     } elseif ($datas['action'] == 'isiCatatan') {
         $peduliDiri->isiCatatan($datas['nik'], $datas['tanggal'], $datas['jam'], $datas['lokasi'], $datas['suhu']);
+    } else {
+        $peduliDiri->sorting($datas['nik'], $datas['sortBy']);
     }
 }
 
