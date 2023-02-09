@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ujikom 2023</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <form class="form-wrapper" action="" method="post">
+        <input
+          class="input-form"
+          type="number"
+          name="nik"
+          placeholder="NIK"
+          id="nik"
+        />
+        <input
+          class="input-form"
+          type="text"
+          name="nama_lengkap"
+          placeholder="Nama Lengkap"
+          id="nama_lengkap"
+        />
+        <div class="button-group">
+          <a class="button" onclick="handleSubmit(event, 'daftar')"
+            >Saya Pengguna Baru</a
+          >
+          <button
+            class="button"
+            type="submit"
+            onclick="handleSubmit(event, 'login')"
+          >
+            Masuk
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- //javascript  -->
+    <script>
+      async function handleSubmit(event, action) {
+        event.preventDefault();
+        const nik = document.getElementById("nik").value;
+        const nama_lengkap = document.getElementById("nama_lengkap").value;
+        // console.log(nik);
+        // console.log(nama_lengkap);
+        // FORMDATA
+        let formData = new FormData();
+        formData.append("nik", nik);
+        formData.append("nama_lengkap", nama_lengkap);
+        if (action === "daftar") {
+          formData.append("action", "daftar");
+        } else {
+          formData.append("action", "login");
+        }
+        //
+        let object = {};
+        console.log(formData);
+        formData.forEach((value, key) => (object[key] = value));
+        let json = JSON.stringify(object);
+        console.log(json);
+
+        if (action === "daftar") {
+          try {
+            const response = await fetch("http://localhost", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: json,
+            });
+            let data = await response.json();
+            // console.log("data", data.length);
+            console.log("data", data);
+
+            if (data.status != "Sukses") {
+              alert("NIK sudah terdaftar");
+            } else {
+              alert("Pendaftaran berhasil, anda akan diarahkan ke dashboard!");
+              localStorage.setItem("isLoggedin", data.nik);
+              localStorage.setItem("isLoggedinName", data.nama_lengkap);
+              window.location.replace("/dashboard.html");
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+        } else {
+          //masuk
+          // if (nik === "admin" && nama_lengkap === "123") {
+          //   localStorage.setItem("isLoggedin", "admin");
+          //   window.location.replace("/dashboard.html");
+          // } else {
+          //   alert("Username atau Password salah!");
+          // }
+
+          try {
+            const response = await fetch("http://localhost", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: json,
+            });
+            let data = await response.json();
+            // console.log("data", data.length);
+            console.log("data", data);
+            if (data.status === "success") {
+              localStorage.setItem("isLoggedin", data.nik);
+              localStorage.setItem("isLoggedinName", data.nama_lengkap);
+              window.location.replace("/dashboard.html");
+            } else {
+              alert("Username atau password salah!");
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+        }
+
+        // try {
+        //   //kirim data ke api
+        //   const response = await fetch("http://localhost", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: json,
+        //   });
+        //   let data = await response.json();
+        //   console.log(data);
+        //   if (data) {
+        //     if (data.status === "success") {
+        //       localStorage.setItem("isLoggedin", data.nik);
+        //       localStorage.setItem("isLoggedinName", data.nama_lengkap);
+        //       window.location.replace("/dashboard.html");
+        //     } else {
+        //       alert("Username atau password salah!");
+        //     }
+        //   }
+        // } catch (error) {
+        //   console.log(error);
+        // }
+      }
+    </script>
+  </body>
+</html>

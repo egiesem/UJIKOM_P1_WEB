@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+  <body>
+    <div class="d-wrapper">
+      <div class="left">
+        <img class="img" src="./assets/images/person2.png" alt="person" />
+      </div>
+
+      <div class="right">
+        <h1 class="title" id="judul">Peduli Diri</h1>
+        <h3 class="sub-title">Catatan Perjalanan</h3>
+        <ul class="menu-wrapper">
+          <li class="menu-item" onclick="showTab('home')">Home</li>
+          <li class="menu-item" onclick="showTab('catatan')">
+            Catatan Perjalanan
+          </li>
+          <li class="menu-item" onclick="showTab('isiData')">Isi Data</li>
+        </ul>
+        <!-- //ini adalah tampilan selamat datang  -->
+        <div class="item-id jumbotron-wrapper">
+          <div class="jumbotron">
+            <p class="description">
+              Selamat Datang <span id="isLoggedinName"></span> di Aplikasi
+              Peduli Diri
+            </p>
+          </div>
+          <button class="btn">Isi Catatan Perjalanan</button>
+        </div>
+
+        <!-- // ini batas tampilan selamat datang  -->
+
+        <!-- mulai ke 2  -->
+        <div class="item-id hidden table-wrapper">
+          <div class="table-header">
+            <span class="table-header-text">Urutkan Berdasarkan</span>
+            <select class="table-header-select" id="selectSorting">
+              <option value="tanggal">Tanggal</option>
+              <option value="waktu">Waktu</option>
+              <option value="lokasi">Lokasi</option>
+              <option value="suhu">Suhu Tubuh</option>
+            </select>
+            <button class="button-dashboard" onclick="urutkanTable()">
+              Urutkan
+            </button>
+          </div>
+          <!-- // -->
+          <div class="table-body">
+            <table id="dataFromApi">
+              <!-- <tr>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+                <th>Lokasi</th>
+                <th>Suhu Tubuh</th>
+              </tr>
+              <tr>
+                <td>10 Jan 2023</td>
+                <td>10.10</td>
+                <td>Legok</td>
+                <td>50C</td>
+              </tr>
+              <tr>
+                <td>12 Jan 2023</td>
+                <td>10.10</td>
+                <td>Legok</td>
+                <td>50C</td>
+              </tr>
+              <tr>
+                <td>15 Jan 2023</td>
+                <td>10.10</td>
+                <td>Legok</td>
+                <td>50C</td>
+              </tr> -->
+            </table>
+            <button class="button btn-table">Isi Catatan Perjalanan</button>
+          </div>
+        </div>
+        <!-- //batas ke 2 -->
+
+        <div class="item-id hidden jumbotron-wrapper">
+          <div class="jumbotron content-center">
+            <div class="dashboard-form-wrapper">
+              <span>Tanggal</span>
+              <input type="date" name="" id="tanggal" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper">
+              <span>Jam</span>
+              <input type="time" name="" id="jam" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper">
+              <span>Lokasi yang dikunjungi</span>
+              <input type="text" name="" id="lokasi" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper">
+              <span>Suhu Tubuh</span>
+              <input type="text" name="" id="suhu" class="d-form-input" />
+            </div>
+            <div class="dashboard-form-wrapper button-d-form">
+              <button class="button btn-table" onclick="isiCatatan(event)">
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- // batas  -->
+      </div>
+    </div>
+    <script>
+      async function showTab(params) {
+        //document.getElementById("demo");
+        //document.querySelector(".example");
+        // if (el.classList.contains("hidden")) {
+        //   el.classList.remove("hidden");
+        // } else {
+        //   // el.classList.add("hidden");
+        // }
+        function menuLooping(el, x) {
+          el.forEach((element, index) => {
+            console.log("element", index);
+            if (index === x) {
+              if (element.classList.contains("hidden")) {
+                return element.classList.remove("hidden");
+              }
+            } else {
+              return element.classList.add("hidden");
+            }
+          });
+        }
+
+        const el = document.querySelectorAll(".item-id");
+        console.log("el", params);
+        if (params === "home") {
+          menuLooping(el, 0);
+          // el.forEach((element, index) => {
+          //   console.log("element", index);
+          //   if (index === 0) {
+          //     if (element.classList.contains("hidden")) {
+          //       element.classList.remove("hidden");
+          //     }
+          //   } else {
+          //     element.classList.add("hidden");
+          //   }
+          // });
+        } else if (params === "catatan") {
+          el.forEach((element, index) => {
+            console.log("element", index);
+            if (index === 1) {
+              if (element.classList.contains("hidden")) {
+                element.classList.remove("hidden");
+              }
+            } else {
+              element.classList.add("hidden");
+            }
+          });
+
+          const response = await fetch("http://localhost", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              nik: localStorage.getItem("isLoggedin"),
+              action: "getCatatan",
+            }),
+          });
+          let getData = await response.json();
+
+          console.log(" getData", getData);
+          const dataTable = document.getElementById("dataFromApi");
+
+          let datas = `<tr>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+                <th>Lokasi</th>
+                <th>Suhu Tubuh</th>
+              </tr>`;
+
+          getData.forEach((data) => {
+            datas += `<tr>
+                <td>${data.tanggal}</td>
+                <td>${data.waktu}</td>
+                <td>${data.lokasi}</td>
+                <td>${data.suhu}</td>
+              </tr>`;
+          });
+
+          dataTable.innerHTML = datas;
+
+          // getData.map((user, index) => {
+          //   console.log("tes", user);
+          // });
+          // dataTable.innerHTML = for (let index = 0; index < array.length; index++) {
+          //    `<tr>
+          //       <td>January</td>
+          //       <td>$100</td>
+          //       <td>January</td>
+          //       <td>$100</td>
+          //     </tr>`;
+
+          // }
+        } else {
+          el.forEach((element, index) => {
+            console.log("element", index);
+            if (index === 2) {
+              if (element.classList.contains("hidden")) {
+                element.classList.remove("hidden");
+              }
+            } else {
+              element.classList.add("hidden");
+            }
+          });
+        }
+      }
+
+      async function callApi(url) {
+        const response = await fetch(url);
+        let data = await response.json();
+        // console.log("data", data.length);
+        return data;
+      }
+
+      // callApi("https://jsonplaceholder.typicode.com/users");
+
+      //next: https://stackoverflow.com/questions/66209717/update-multiple-variables-with-onchange-event-in-vanilla-javascript
+      // next: php
+
+      function getisLoggedinName() {
+        const name = localStorage.getItem("isLoggedinName");
+
+        if (name) {
+          document.getElementById("isLoggedinName").innerHTML = name;
+        }
+      }
+
+      getisLoggedinName();
+
+      async function isiCatatan(event) {
+        event.preventDefault();
+        const tanggal = document.getElementById("tanggal").value;
+        const jam = document.getElementById("jam").value;
+        const lokasi = document.getElementById("lokasi").value;
+        const suhu = document.getElementById("suhu").value;
+        const nik = localStorage.getItem("isLoggedin");
+
+        let formData = new FormData();
+        formData.append("tanggal", tanggal);
+        formData.append("jam", jam);
+        formData.append("lokasi", lokasi);
+        formData.append("suhu", suhu);
+        formData.append("nik", nik);
+        formData.append("action", "isiCatatan");
+
+        let object = {};
+        console.log(formData);
+        formData.forEach((value, key) => (object[key] = value));
+        let json = JSON.stringify(object);
+
+        try {
+          const response = await fetch("http://localhost", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: json,
+          });
+          let data = await response.json();
+          console.log("data", data);
+          if (data.status == "success") {
+            alert("Data Berhasil ditambahkan!");
+            showTab("catatan");
+          } else {
+            alert("Data gagal ditambahkan");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    </script>
+
+    <script>
+      async function urutkanTable() {
+        const data = document.getElementById("selectSorting").value;
+        console.log("clicked", data);
+
+        const response = await fetch("http://localhost", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nik: localStorage.getItem("isLoggedin"),
+            sortBy: data,
+            action: "sorting",
+          }),
+        });
+        let getData = await response.json();
+
+        console.log(" getData", getData);
+        const dataTable = document.getElementById("dataFromApi");
+
+        let datas = `<tr>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+                <th>Lokasi</th>
+                <th>Suhu Tubuh</th>
+              </tr>`;
+
+        getData.forEach((data) => {
+          datas += `<tr>
+                <td>${data.tanggal}</td>
+                <td>${data.waktu}</td>
+                <td>${data.lokasi}</td>
+                <td>${data.suhu}</td>
+              </tr>`;
+        });
+
+        dataTable.innerHTML = datas;
+      }
+      // console.log("Hallo Wolrd!");
+
+      //Membuat/mendefinisikan variable
+      // var umur;
+      // let umur1 = "1";
+      // const umur2 = 1;
+
+      // //Conditional
+
+      // const x = "-1";
+
+      // if (x == 1) {
+      //   console.log("nilainya kecil");
+      // } else if (x < 1) {
+      //   console.log("nilainya rata");
+      // } else {
+      //   console.log("nilainya besar");
+      // }
+
+      //looping
+      // for (let index = 1; index < 6; index++) {
+      //   let hasil = index+
+      //   console.log("Saya rajin!");
+      //   console.log(index);
+      // }
+      // for (let index = 0; index < 5; index++) {
+      //   // // console.log(index++ + "haloo");
+      //   // console.log("index", index);
+      //   if (index % 2 == 0) {
+      //     console.log(index + 1 + ". Saya rajin!");
+      //     // console.log("index", index);
+      //   }
+      // }
+
+      // }
+
+      // for (let index = 1; index < 6; index++) {}
+
+      // if (X % 2 == 0) {
+      //   console.log("genap");
+      // } else {
+      //   console.log("ganjil");
+      // }
+
+      // let result = umur + umur2;
+      // console.log("tipe data", typeof umur2);
+
+      // let judul = document.getElementById("judul");
+      // console.log("judul", judul);
+      // setTimeout(() => {
+      //   judul.innerText = "Peduli Lindungi";
+      //   judul.style.color = "red";
+      // }, 3000);
+
+      // const x = 100;
+
+      // if (x < 51) {
+      //   console.log("C");
+      // } else if (x < 76) {
+      //   console.log("B");
+      // } else {
+      //   console.log("A");
+      // }
+
+      // if (x >= 0 && x <= 50) {
+      //   console.log("C");
+      // } else if (x >= 51 && x <= 75) {
+      //   console.log("B");
+      // } else if (x > 75 && x <= 100) {
+      //   console.log("A");
+      // }
+      // const xy = 3;
+      // switch (xy) {
+      //   case 2:
+      //     console.log("tes");
+      //     break;
+
+      //   default:
+      //     console.log("halo");
+      //     break;
+      // }
+    </script>
+  </body>
+</html>

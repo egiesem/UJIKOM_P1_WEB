@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .hidden {
+        display: none;
+      }
+
+      .item {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div onclick="showHide('satu')">MENU1</div>
+    <div onclick="showHide('dua')">MENU2</div>
+    <div onclick="showHide('tiga')">MENU3</div>
+    <hr />
+    <div class="item">ISI MENU 1</div>
+    <div class="item hidden">ISI MENU 2</div>
+    <div class="item hidden">ISI MENU 3</div>
+
+    <script>
+      function showHide(params) {
+        const allElemenIsi = document.querySelectorAll(".item");
+
+        function menuLooping(el, x) {
+          el.forEach((element, index) => {
+            if (index === x) {
+              if (element.classList.contains("hidden")) {
+                return element.classList.remove("hidden");
+              }
+            } else {
+              return element.classList.add("hidden");
+            }
+          });
+        }
+        if (params === "satu") {
+          menuLooping(allElemenIsi, 0);
+        } else if (params === "dua") {
+          menuLooping(allElemenIsi, 1);
+        } else {
+          menuLooping(allElemenIsi, 2);
+        }
+      }
+    </script>
+  </body>
+</html>
